@@ -18,11 +18,11 @@
 					<hr />
 				</div>
 				<div class="list-group list-group-flush">
-					<a href="#" class="list-group-item list-group-item-action" style="border: 0px">
+					<a href="index.php" class="list-group-item list-group-item-action" style="border: 0px">
 						<i><img src="assets/images/add-expediente.png" alt="" /></i>
                         Expediente
                     </a>
-					<a href="#" class="list-group-item list-group-item-action" style="border: 0px">
+					<a href="reportes.php" class="list-group-item list-group-item-action" style="border: 0px">
 						<i><img src="assets/images/edit-expediente.png" alt="" /></i>
                         Reportes
                     </a>
@@ -51,7 +51,7 @@
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 							<li class="nav-item active">
-								<a class="nav-link text-white">Bienvenido <?= $user['PriNombre']; ?></a>
+								<a class="nav-link text-white">Bienvenido/a <?= $user['PriNombre']; ?></a>
 							</li>
 						</ul>
 					</div>

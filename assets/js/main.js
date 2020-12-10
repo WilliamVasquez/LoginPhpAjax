@@ -3,6 +3,8 @@ $(function () {
 	fillFacultad();
 	fillPrograma();
 	fillMotivo();
+	fillAnio();
+	let edit = false;
 	function getExp() {
 		$.ajax({
 			url: 'exp-list.php',
@@ -68,6 +70,20 @@ $(function () {
 					template += `<option value="${fact.idMotivo}">${fact.Nombre}</option>`;
 				});
 				$('#cmbMotivo').html(template);
+			},
+		});
+	}
+	function fillAnio() {
+		$.ajax({
+			url: 'cmbAnio.php',
+			type: 'GET',
+			success: function (response) {				
+				let facts = JSON.parse(response);			
+				let template = '<option value="0">Seleccionar::</option>';
+				facts.forEach((fact) => {
+					template += `<option value="${fact.Anio}">${fact.Anio}</option>`;
+				});
+				$('#cmbCancelacion').html(template);
 			},
 		});
 	}
@@ -228,6 +244,7 @@ $(function () {
 
 			$('#accion').text(textButton);
 			$('.custom-checkbox').css('display', 'none');
+			$('#accion').css('display', 'block');
 
 			$('#carnet').focus();
 			$('#accion').removeAttr('name');

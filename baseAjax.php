@@ -2,7 +2,7 @@
     $con = mysqli_connect(
         'localhost',
         'root',
-        '',
+        '1523',
         'bdarchivos'
     );
     if (mysqli_connect_errno()) {

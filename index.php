@@ -3,7 +3,7 @@
 	session_start();
 
   	if (isset($_SESSION['user_id'])) {
-		header('Location: /gestor/login/admin.php');
+		header('Location: admin.php');
   	}
   	require 'database.php';
 
@@ -16,7 +16,7 @@
 		$message = ''; 
 		if (is_countable($results) > 0) { 
 			$_SESSION['user_id'] = $results['Escritorio'];
-			header("Location: /gestor/login/admin.php"); 
+			header("Location: admin.php"); 
 		} else { 
 			$message = "<script>alertify.error('Sorry, those credentials do not match');</script>"; 
 		}
