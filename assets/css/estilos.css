@@ -55,7 +55,8 @@ html {
 	margin: 0;
 	padding: 0;
 	box-shadow: 0px 0px 1em #c99a87;
-	border-radius: 30px;
+	border-radius: 10px;
+	border: var(--secundary-bg-color) solid;
 }
 
 .form-login {
@@ -114,19 +115,29 @@ html {
 	.footer {
 		position: relative;
 	}
-
-	.logo-ues {
-		width: 75%;
+	.logo {
+		text-align: center;
 	}
-
+	.logo-ues {
+		margin-top: 3%;
+		width: 90%;
+	}
 	.content-form {
-		margin-left: 3%;
+		margin-right: 1.6em;
 	}
 	#verExpediente {
 		margin-bottom: 2px;
 	}
 }
+@media screen and (max-height: 823px) {
+	.footer {
+		position: relative;
+	}
 
+	.logo-uese {
+		margin-top: 3%;
+	}
+}
 /* EXPEDIENTE */
 
 i > img {

@@ -3,7 +3,6 @@ $(function () {
 	fillFacultad();
 	fillPrograma();
 	fillMotivo();
-	let edit = false;
 	function getExp() {
 		$.ajax({
 			url: 'exp-list.php',
@@ -21,8 +20,8 @@ $(function () {
 						<td>${exp.Motivo}</td>
 						<td>${exp.Estado}</td>
 						<td class="d-flex">
-						<button type="button" id="verExpediente" class="btn btn-primary exp-item w-50 mr-2" data-toggle="modal" data-target="#formExpediente" value="${exp.Expediente}">Ver</button>
-						<button type="button" id="editarExpediente" class="btn btn-primary exp-item w-50" data-toggle="modal" data-target="#formExpediente" value="${exp.Expediente}">Editar</button>
+						<button type="button" id="verExpediente" class="btn btn-primary exp-item w-50 mr-2" data-toggle="modal" data-target="#formExpediente" value="${exp.idDetalle}">Ver</button>
+						<button type="button" id="editarExpediente" class="btn btn-primary exp-item w-50" data-toggle="modal" data-target="#formExpediente" value="${exp.idDetalle}">Editar</button>
 						</td>
 					</tr>`;
 				});
@@ -36,7 +35,7 @@ $(function () {
 			type: 'GET',
 			success: function (response) {
 				let facts = JSON.parse(response);
-				let template = '';
+				let template = '<option value="-1" disabled selected hidden>Por favor seleccione una opcion</option>';
 				facts.forEach((fact) => {
 					template += `<option value="${fact.idFacultad}">${fact.Nombre}</option>`;
 				});
@@ -50,7 +49,7 @@ $(function () {
 			type: 'GET',
 			success: function (response) {
 				let facts = JSON.parse(response);
-				let template = '';
+				let template = '<option value="-1" disabled selected hidden>Por favor seleccione una opcion</option>';
 				facts.forEach((fact) => {
 					template += `<option value="${fact.idPrograma}">${fact.Nombre}</option>`;
 				});
@@ -64,7 +63,7 @@ $(function () {
 			type: 'GET',
 			success: function (response) {
 				let facts = JSON.parse(response);
-				let template = '';
+				let template = '<option value="-1" disabled selected hidden>Por favor seleccione una opcion</option>';
 				facts.forEach((fact) => {
 					template += `<option value="${fact.idMotivo}">${fact.Nombre}</option>`;
 				});
@@ -72,26 +71,68 @@ $(function () {
 			},
 		});
 	}
-	$('#form-Expediente').submit(function (e) {
-		const postData = {
-			Expediente: $('#expId').val(),
-			Carnet: $('#Carnet').val(),
-		};
-		let url = '';
-		if (edit === false) url = 'exp-add.php';
-		else url = 'exp-edit.php';
-		$.post(url, postData, function (response) {
-			edit = false;
-			getExp();
-			$('#form-Expediente').trigger('reset');
+	function resetModalExp() {
+		$('#cmbPrograma').val(-1);
+		$('#cmbFacultad').val(-1);
+		$('#cmbMotivo').val(-1);
+		$('#expId').val('');
+		$('#expExp').val('');
+		$('#formExpediente').trigger('reset');
+	}
+	$('#nuevoExpediente').click(function (e) {
+		resetModalExp();
+	});
+	$('#formExpediente').submit(function (e) {
+		$("button[name='addExp']").click(function () {
+			const postData = {
+				codigo: '123456',
+				carnet: $('#txtCarnet').val(),
+				priNombre: $('#txtNombres').val().trim().split(' ')[0],
+				segNombre: $('#txtNombres').val().trim().split(' ')[1],
+				priApellido: $('#txtApellidos').val().trim().split(' ')[0],
+				segApellido: $('#txtApellidos').val().trim().split(' ')[1],
+				inputCity: $('#dtpInputCity').val(),
+				programa: $('#cmbPrograma').val(),
+				facultad: $('#cmbFacultad').val(),
+				motivo: $('#cmbMotivo').val(),
+				observacion: $('#txtObservacion').val(),
+			};
+			$.post('exp-add.php', postData, function (response) {
+				console.log(response);
+				getExp();
+				$('#formExpediente').trigger('reset');
+			});
+		});
+
+		$("button[name='editExp']").click(function () {
+			const postData = {
+				id: $('#expId').val(),
+				codigo: $('#expExp').val(),
+				carnet: $('#txtCarnet').val(),
+				priNombre: $('#txtNombres').val().trim().split(' ')[0],
+				segNombre: $('#txtNombres').val().trim().split(' ')[1],
+				priApellido: $('#txtApellidos').val().trim().split(' ')[0],
+				segApellido: $('#txtApellidos').val().trim().split(' ')[1],
+				inputCity: $('#dtpInputCity').val(),
+				programa: $('#cmbPrograma').val(),
+				facultad: $('#cmbFacultad').val(),
+				motivo: $('#cmbMotivo').val(),
+				observacion: $('#txtObservacion').val(),
+			};
+			$.post('exp-edit.php', postData, function (response) {
+				console.log(response);
+				getExp();
+				$('#formExpediente').trigger('reset');
+			});
 		});
 		e.preventDefault();
 	});
 	$(document).on('click', '.exp-item', function () {
-		let Expediente = $(this).val();
-		$.post('exp-single.php', { Expediente }, function (response) {
+		let idExpediente = $(this).val();
+		$.post('exp-single.php', { idExpediente }, function (response) {
 			const exp = JSON.parse(response);
-			$('#expId').val(exp.Expediente);
+			$('#expId').val(exp.idExpediente);
+			$('#expExp').val(exp.Expediente);
 			$('#txtCarnet').val(exp.Carnet);
 			$('#txtNombres').val(exp.Nombres);
 			$('#txtApellidos').val(exp.Apellidos);
@@ -100,7 +141,6 @@ $(function () {
 			$('#cmbFacultad').val(exp.Facultad);
 			$('#cmbMotivo').val(exp.Motivo);
 			$('#txtObservacion').val(exp.Observacion);
-			edit = true;
 		});
 	});
 	$('#menu-toggle').click(function (e) {
@@ -125,6 +165,8 @@ $(function () {
 			$('#accion').css('display', 'none'); //Esconder button
 			$('.custom-checkbox').css('display', 'none'); //Esconder button
 
+			$('#accion').removeAttr('name');
+
 			modal.find('.modal-body input, textarea, select, label, .custom-file-label').off(); //Para que no agarre el click xd
 		}
 
@@ -134,6 +176,8 @@ $(function () {
 			$('.custom-checkbox').css('display', 'block');
 			$('#accion').text(textButton);
 			$('#accion').css('display', 'block');
+			$('#accion').removeAttr('name');
+			$('#accion').attr('name', 'editExp');
 
 			$('input, select, textarea').click(function (e) {
 				let click = $(this);
@@ -147,25 +191,25 @@ $(function () {
 
 			$('#chk-programa').click(function (e) {
 				if ($(this).prop('checked')) {
-					$('#programa').prop('disabled', false).focus();
+					$('#cmbPrograma').prop('disabled', false).focus();
 				} else {
-					$('#programa').prop('disabled', true);
+					$('#cmbPrograma').prop('disabled', true);
 				}
 			});
 
 			$('#chk-facultad').click(function (e) {
 				if ($(this).prop('checked')) {
-					$('#facultad').prop('disabled', false).focus();
+					$('#cmbFacultad').prop('disabled', false).focus();
 				} else {
-					$('#facultad').prop('disabled', true);
+					$('#cmbFacultad').prop('disabled', true);
 				}
 			});
 
-			$('#chk-motivos').click(function (e) {
+			$('#chk-motivo').click(function (e) {
 				if ($(this).prop('checked')) {
-					$('#motivos').prop('disabled', false).focus();
+					$('#cmbMotivo').prop('disabled', false).focus();
 				} else {
-					$('#motivos').prop('disabled', true);
+					$('#cmbMotivo').prop('disabled', true);
 				}
 			});
 
@@ -186,6 +230,8 @@ $(function () {
 			$('.custom-checkbox').css('display', 'none');
 
 			$('#carnet').focus();
+			$('#accion').removeAttr('name');
+			$('#accion').attr('name', 'addExp');
 		}
 
 		//Limpiar el modal
@@ -193,4 +239,34 @@ $(function () {
 			modal.find('#formExpediente')[0].reset();
 		});
 	});
+	/*function editar(control, postData, vista) {
+		Swal.fire({
+			title: '¿Está seguro de que desea editarlo?',
+			text: 'Si está seguro de que desea editar el expediente, haga clic en [Si , editarlo].',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si, editarlo',
+			cancelButtonText: 'No, cancelar',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.post(control, postData, function (response) {
+					console.log(control);
+					console.log(postData);
+					console.log(vista);
+					getExp();
+				})
+					.done(function () {
+						Swal.fire('Edicion de ' + vista, 'El ' + vista + ' ha sido modificado.', 'success');
+						$('#cerrar').click();
+						resetModalExp();
+					})
+					.fail(function (xhr, textStatus, errorThrown) {
+						Swal.fire('Edicion de ' + vista, 'No se ha sido modificado el ' + vista + '.', 'error');
+						console.error(xhr.responseText);
+					});
+			}
+		});
+	}*/
 });

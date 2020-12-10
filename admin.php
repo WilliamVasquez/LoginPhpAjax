@@ -34,7 +34,7 @@
 				<input
 					type="text"
 					placeholder="Buscar expediente..."
-					class="form-control"
+					class="form-control ml-1"
 					id="search"
 					name="search"
 					autofocus
@@ -44,7 +44,7 @@
 				<button
 					type="submit"
 					id="nuevoExpediente"
-					class="btn btn-success btn-block"
+					class="btn btn-success btn-block ml-2"
 					data-toggle="modal"
 					data-target="#formExpediente"
 					data-tipo="newExpediente"
@@ -57,7 +57,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				<table class="table table-responsive-md table-hover table-striped mt-5">
+				<table class="table table-responsive table-hover table-striped mt-5">
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">Expediente</th>
@@ -75,7 +75,9 @@
 			</div>
 		</div>
 	</div>
-
+	<?php if(!empty($message)): ?>
+		<?= $message ?>
+	<?php endif; ?>
 	<?php 
 		require 'inc/modals.php';
 		require 'inc/footer.php'; 

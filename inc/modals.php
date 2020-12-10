@@ -18,8 +18,9 @@
                 </div>
 
                 <div class="modal-body">
-                    <form method="POST" enctype="multipart/form-data" id="form-Expediente">
+                    <form method="POST" enctype="multipart/form-data" id="formExpediente">
                         <input type="hidden" id="expId" />
+                        <input type="hidden" id="expExp" />
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="carnet">Carnet</label>
@@ -92,21 +93,13 @@
 
                         <div class="form-group">
                             <label for="fileExp">Archivos del expediente</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="fileExp" lang="es" />
-                                <label class="custom-file-label" for="customFileLang">Seleccionar Archivo ... </label>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="chk-files" />
-                                    <label class="custom-control-label" for="chk-files">Activar</label>
-                                </div>
-                            </div>
+                            <input type="file" name="uploadedFile" accept=".jpg,.jpeg,.png,.pdf"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-danger" data-dismiss="modal" id="cerrar">Cerrar</button>
+                            <button type="submit" class="btn btn-success" id="accion">:Accion</button>
                         </div>
                     </form>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="reset" class="btn btn-danger" data-dismiss="modal" id="cerrar">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="accion">:Accion</button>
                 </div>
             </div>
         </div>
