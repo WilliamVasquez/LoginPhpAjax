@@ -83,7 +83,8 @@ $(function () {
 		resetModalExp();
 	});
 	$('#formExpediente').submit(function (e) {
-		$("button[name='addExp']").click(function () {
+		$('button[name="addExp"]').click(function () {
+			let file = $('#fileExp')[0].files[0];
 			const postData = {
 				codigo: '123456',
 				carnet: $('#txtCarnet').val(),
@@ -96,7 +97,12 @@ $(function () {
 				facultad: $('#cmbFacultad').val(),
 				motivo: $('#cmbMotivo').val(),
 				observacion: $('#txtObservacion').val(),
+				fileName: file.name,
+				fileSize: file.size,
+				fileType: file.type,
 			};
+			console.info(postData);
+			$('#formExpediente').modal('toggle');
 			$.post('exp-add.php', postData, function (response) {
 				console.log(response);
 				getExp();
@@ -104,7 +110,7 @@ $(function () {
 			});
 		});
 
-		$("button[name='editExp']").click(function () {
+		$('button[name="editExp"]').click(function () {
 			const postData = {
 				id: $('#expId').val(),
 				codigo: $('#expExp').val(),

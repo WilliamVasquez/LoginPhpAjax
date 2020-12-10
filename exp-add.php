@@ -1,7 +1,6 @@
 <?php
     include 'baseAjax.php';
 
-
         $carnet = $_POST['carnet'];
         $codigo = $_POST['codigo'];
         $priNombre = $_POST['priNombre'];
@@ -13,19 +12,18 @@
         $facultad = $_POST['facultad'];
         $motivo = $_POST['motivo'];
         $observacion = $_POST['observacion'];
+        $fileName = $_POST['fileName'];
+        $fileSize = $_POST['fileSize'];
+        $fileType = $_POST['fileType'];
         $url = str_replace('/','',trim(filter_var($_POST['carnet'],FILTER_SANITIZE_URL)));
         $uploadFileDir = 'uploads/' . $url . '/';
         if(!file_exists($uploadFileDir)){
             mkdir($uploadFileDir, 0777);
         }
-        $fileTmpPath = $_FILES['uploadedFile']['tmp_name'];
-        $fileName = $_FILES['uploadedFile']['name'];
-        $fileSize = $_FILES['uploadedFile']['size'];
-        $fileType = $_FILES['uploadedFile']['type'];
+        $fileTmpPath = $fileName['tmp_name'];
         $fileNameCmps = explode(".", $fileName);
         $fileExtension = strtolower(end($fileNameCmps));
         $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
-        echo $newFileName;
         $allowedfileExtensions = array('jpg', 'png', 'jpeg', 'pdf');
         if (in_array($fileExtension, $allowedfileExtensions)) {
             $dest_path = $uploadFileDir . $newFileName;

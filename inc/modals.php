@@ -93,7 +93,14 @@
 
                         <div class="form-group">
                             <label for="fileExp">Archivos del expediente</label>
-                            <input type="file" name="uploadedFile" accept=".jpg,.jpeg,.png,.pdf"/>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="fileExp" lang="es" accept=".jpg,.jpeg,.png,.pdf" name="uploadedFile" />
+                                <label class="custom-file-label" for="customFileLang">Seleccionar Archivo ... </label>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="chk-files" />
+                                    <label class="custom-control-label" for="chk-files">Activar</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="reset" class="btn btn-danger" data-dismiss="modal" id="cerrar">Cerrar</button>
