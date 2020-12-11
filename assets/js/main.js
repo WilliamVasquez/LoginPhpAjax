@@ -84,9 +84,9 @@ $(function () {
 	});
 	$('#formExpediente').submit(function (e) {
 		$('button[name="addExp"]').click(function () {
-			let file = $('#fileExp')[0].files[0];
+			let rand = Math.floor((Math.random() * 10) + 1);
 			const postData = {
-				codigo: '123456',
+				codigo: rand,
 				carnet: $('#txtCarnet').val(),
 				priNombre: $('#txtNombres').val().trim().split(' ')[0],
 				segNombre: $('#txtNombres').val().trim().split(' ')[1],
@@ -97,10 +97,7 @@ $(function () {
 				facultad: $('#cmbFacultad').val(),
 				motivo: $('#cmbMotivo').val(),
 				observacion: $('#txtObservacion').val(),
-				fileName: file.name,
-				fileSize: file.size,
-				fileType: file.type,
-			};
+				};
 			console.info(postData);
 			$('#formExpediente').modal('toggle');
 			$.post('exp-add.php', postData, function (response) {
