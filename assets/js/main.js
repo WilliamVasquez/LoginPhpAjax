@@ -3,6 +3,7 @@ $(function () {
 	fillFacultad();
 	fillPrograma();
 	fillMotivo();
+	fillAnio();
 	function getExp() {
 		$.ajax({
 			url: 'exp-list.php',
@@ -71,6 +72,20 @@ $(function () {
 			},
 		});
 	}
+	function fillAnio() {
+		$.ajax({
+			url: 'cmbAnio.php',
+			type: 'GET',
+			success: function (response) {
+				let facts = JSON.parse(response);
+				let template = '<option value="0">Seleccionar::</option>';
+				facts.forEach((fact) => {
+					template += `<option value="${fact.Anio}">${fact.Anio}</option>`;
+				});
+				$('#cmbCancelacion').html(template);
+			},
+		});
+	}
 	function resetModalExp() {
 		$('#cmbPrograma').val(-1);
 		$('#cmbFacultad').val(-1);
@@ -86,7 +101,7 @@ $(function () {
 		$('button[name="addExp"]').click(function () {
 			let rand = Math.floor((Math.random() * 10) + 1);
 			const postData = {
-				codigo: rand,
+				codigo: rand.toString(),
 				carnet: $('#txtCarnet').val(),
 				priNombre: $('#txtNombres').val().trim().split(' ')[0],
 				segNombre: $('#txtNombres').val().trim().split(' ')[1],
@@ -231,6 +246,7 @@ $(function () {
 
 			$('#accion').text(textButton);
 			$('.custom-checkbox').css('display', 'none');
+			$('#accion').css('display', 'block');
 
 			$('#carnet').focus();
 			$('#accion').removeAttr('name');
@@ -242,34 +258,4 @@ $(function () {
 			modal.find('#formExpediente')[0].reset();
 		});
 	});
-	/*function editar(control, postData, vista) {
-		Swal.fire({
-			title: '¿Está seguro de que desea editarlo?',
-			text: 'Si está seguro de que desea editar el expediente, haga clic en [Si , editarlo].',
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Si, editarlo',
-			cancelButtonText: 'No, cancelar',
-		}).then((result) => {
-			if (result.isConfirmed) {
-				$.post(control, postData, function (response) {
-					console.log(control);
-					console.log(postData);
-					console.log(vista);
-					getExp();
-				})
-					.done(function () {
-						Swal.fire('Edicion de ' + vista, 'El ' + vista + ' ha sido modificado.', 'success');
-						$('#cerrar').click();
-						resetModalExp();
-					})
-					.fail(function (xhr, textStatus, errorThrown) {
-						Swal.fire('Edicion de ' + vista, 'No se ha sido modificado el ' + vista + '.', 'error');
-						console.error(xhr.responseText);
-					});
-			}
-		});
-	}*/
 });

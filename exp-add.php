@@ -40,7 +40,7 @@
         // {
         //     $message = "<script>alertify.error('Sorry, only JPG, JPEG, PNG & PDF files are allowed');</script>";
         // }
-        $query = "CALL crud_expediente ('2', '', '$codigo', 'Ingresado', '', '', '$observacion', '$fecha', '$carnet', '$priNombre', '$segNombre', '$priApellido', '$segApellido', '$motivo', '$programa','$facultad');";
+        $query = "CALL crud_expediente ('2', 0, '$codigo', 'Ingresado', 'SIN UBICACION', 'COMENTARIOS', '$observacion', '$fecha', '$carnet', '$priNombre', '$segNombre', '$priApellido', '$segApellido', '$motivo', '$programa','$facultad');";
         $result= mysqli_query($con,$query);
         if(!$result){
             die('Query failed exp-add app! '.mysqli_error($con));

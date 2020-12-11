@@ -2,7 +2,7 @@
     include 'baseAjax.php';
     if(isset($_POST['idExpediente'])){
         $IdDetalleExpediente = $_POST['idExpediente'];
-        $query = "CALL crud_expediente ('4', '$IdDetalleExpediente', '', '', '', '', '', '', '', '', '', '', '', '', '','');";
+        $query = "CALL crud_expediente ('4', '$IdDetalleExpediente', '', '', '', '', '', '', '', '', '', '', '', 0, 0, 0);";
         $result = mysqli_query($con,$query);
         if(!$result)
             die('Query failed!  single'.mysqli_error($con));
@@ -24,6 +24,6 @@
         $jsonString = json_encode($json[0]);
         echo $jsonString;
     }
-    
+
 
 ?>

@@ -1,6 +1,6 @@
 <?php
     include 'baseAjax.php';
-    $query = "CALL crud_expediente ('1', '', '', '', '', '', '', '', '', '', '', '', '', '', '','');";
+    $query = "CALL crud_expediente (1, 0, '', '', '', '', '', '', '', '', '', '', '', 0, 0, 0)";
     $result = mysqli_query($con,$query);
     if(!$result){
         die('Query failed task list! '.mysqli_error($con));
