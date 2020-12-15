@@ -1,13 +1,13 @@
 <?php
-    include 'baseAjax.php';
+    include_once 'database.php';
     $query = "select * from motivoCancelacion";
-    $result = mysqli_query($con,$query);
+    $result = $con->query($query);
     if(!$result){
-        die('Query failed cmbMotivo list! '.mysqli_error($con));
+        die('Query failed cmbMotivo list! '.errorInfo());
     }
     else{
         $json = array();
-        while($row = mysqli_fetch_array($result)){
+        while($row = $result->fetch()){
             $json[] = array(
                 'idMotivo' => $row['IdMotivoCancelacion'],
                 'Nombre' => $row['Nombre']

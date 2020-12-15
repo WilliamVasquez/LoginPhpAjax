@@ -2,24 +2,28 @@
 
 	session_start();
 
-  	if (isset($_SESSION['user_id'])) {
+  	if (isset($_SESSION['idUser'])) {
+		//header('Location: '.$_SESSION['vista'].'.php');
 		header('Location: admin.php');
   	}
-  	require 'database.php';
-
-	if (!empty($_POST['txtEscritorio']) && !empty($_POST['txtPassword'])) {
-		$records = $conn->prepare('SELECT * FROM usuario WHERE Escritorio = :escritorio AND Clave = :clave');
-		$records->bindParam(':escritorio', $_POST['txtEscritorio']); 
-		$records->bindParam(':clave', $_POST['txtPassword']); 
-		$records->execute(); 
-		$results = $records->fetch(PDO::FETCH_ASSOC); 
-		$message = ''; 
-		if (is_countable($results) > 0) { 
-			$_SESSION['user_id'] = $results['Escritorio'];
-			header("Location: admin.php"); 
-		} else { 
-			$message = "<script>alertify.error('Sorry, those credentials do not match');</script>"; 
+	require_once 'database.php';
+	if (isset($_POST['txtEscritorio']) && isset($_POST['txtPassword'])) {
+		
+		$result = $con->prepare('SELECT us.Escritorio, us.PriNombre, us.PriApellido, us.Clave, tp.Nombre as Vista FROM usuario us inner join tipousuario tp on us.IdtipoUsuario=tp.IdtipoUsuario WHERE Escritorio = :escritorio;');
+		$escritorio = sano($_POST['txtEscritorio']);
+		$password = sano($_POST['txtPassword']);
+		$result->bindValue(':escritorio', $escritorio);
+		$result->execute();
+		$results = $result->fetch();
+		if (password_verify($password, $results['Clave']) && $results!=0)
+		{
+			$_SESSION['idUser'] = $results['Escritorio'];
+			$_SESSION['nameUser'] = $results['PriNombre'];
+			$_SESSION['vista'] = $results['Vista'];
+			header('Location: admin.php');
 		}
+		else
+			$message = "<script>alertify.error('Sorry, those credentials do not match.');</script>"; 
 	} ?>
 
 <!DOCTYPE html>
@@ -34,7 +38,7 @@
 	</head>
 	<body class="bg-light">
 		<?php if(!empty($message)): ?>
-		<?= $message ?>
+			<?= $message ?>
 		<?php endif; ?>
 		<header>
 			<nav class="navbar navbar-light">
@@ -97,3 +101,5 @@
 		<footer class="footer">
 			<div class="footer-copyright text-center py-3">© 2020 Copyright: ITCA-FEPADE</div>
 		</footer>
+	</body>
+</html>

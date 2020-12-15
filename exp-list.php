@@ -1,13 +1,13 @@
 <?php
-    include 'baseAjax.php';
+    require_once 'database.php';
     $query = "CALL crud_expediente (1, 0, '', '', '', '', '', '', '', '', '', '', '', 0, 0, 0)";
-    $result = mysqli_query($con,$query);
+    $result = $con->query($query);
     if(!$result){
-        die('Query failed task list! '.mysqli_error($con));
+        echo 'Query failed exp list! '.errorInfo();
     }
     else{
         $json = array();
-        while($row = mysqli_fetch_array($result)){
+        while($row = $result->fetch()){
             $json[] = array(
                 'idDetalle' => $row['idDetalle'],
                 'Expediente' => $row['Expediente'],

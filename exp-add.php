@@ -1,17 +1,17 @@
 <?php
-    include 'baseAjax.php';
+    include_once 'database.php';
 
-        $carnet = $_POST['carnet'];
-        $codigo = $_POST['codigo'];
-        $priNombre = $_POST['priNombre'];
-        $segNombre = $_POST['segNombre'];
-        $priApellido = $_POST['priApellido'];
-        $segApellido = $_POST['segApellido'];
+        $carnet = sano($_POST['carnet']);
+        $codigo = sano($_POST['codigo']);
+        $priNombre = sano($_POST['priNombre']);
+        $segNombre = sano($_POST['segNombre']);
+        $priApellido = sano($_POST['priApellido']);
+        $segApellido =sano( $_POST['segApellido']);
         $fecha = $_POST['inputCity'];
-        $programa = $_POST['programa'];
-        $facultad = $_POST['facultad'];
-        $motivo = $_POST['motivo'];
-        $observacion = $_POST['observacion'];
+        $programa = sano($_POST['programa']);
+        $facultad = sano($_POST['facultad']);
+        $motivo = sano($_POST['motivo']);
+        $observacion = sano($_POST['observacion']);
         // $fileName = $_POST['fileName'];
         // $fileSize = $_POST['fileSize'];
         // $fileType = $_POST['fileType'];
@@ -40,10 +40,21 @@
         // {
         //     $message = "<script>alertify.error('Sorry, only JPG, JPEG, PNG & PDF files are allowed');</script>";
         // }
-        $query = "CALL crud_expediente ('2', 0, '$codigo', 'Ingresado', 'SIN UBICACION', 'COMENTARIOS', '$observacion', '$fecha', '$carnet', '$priNombre', '$segNombre', '$priApellido', '$segApellido', '$motivo', '$programa','$facultad');";
-        $result= mysqli_query($con,$query);
+        $result = $con->prepare("CALL crud_expediente ('2', 0, :codigo, 'Ingresado', 'SIN UBICACION', 'COMENTARIOS', :observacion, :fecha, :carnet, :priNombre, :segNombre, :priApellido, :segApellido, :motivo, :programa,:facultad);");
+        $result->bindValue(':codigo', $codigo);
+        $result->bindValue(':observacion', $observacion);
+        $result->bindValue(':fecha', $fecha);
+        $result->bindValue(':carnet', $carnet);
+        $result->bindValue(':priNombre', $priNombre);
+        $result->bindValue(':segNombre', $segNombre);
+        $result->bindValue(':priApellido', $priApellido);
+        $result->bindValue(':segApellido', $segApellido);
+        $result->bindValue(':motivo', $motivo);
+        $result->bindValue(':programa', $programa);
+        $result->bindValue(':facultad', $facultad);
+		$result->execute();
         if(!$result){
-            die('Query failed exp-add app! '.mysqli_error($con));
+            die('Query failed exp-add app! '.errorInfo());
         }
         else
             echo 'exp added successfully and uploaded';

@@ -1,16 +1,16 @@
 <?php
-    include 'baseAjax.php';
+    include_once 'database.php';
     if(isset($_POST['idExpediente'])){
         $IdDetalleExpediente = $_POST['idExpediente'];
         $query = "CALL crud_expediente ('4', '$IdDetalleExpediente', '', '', '', '', '', '', '', '', '', '', '', 0, 0, 0);";
-        $result = mysqli_query($con,$query);
+        $result = $con->query($query);
         if(!$result)
-            die('Query failed!  single'.mysqli_error($con));
+            die('Query failed! exp single'.errorInfo());
         $json = array();
-        while($row = mysqli_fetch_array($result)){
+        while($row = $result->fetch()){
             $json[] = array(
                 'idExpediente' => $row['IdDetalleExpediente'],
-                'Expediente' => $row['Expediente'],
+                'Expediente' => $row['expediente'],
                 'Carnet' => $row['Carnet'],
                 'Nombres' => $row['Nombres'],
                 'Apellidos' => $row['Apellidos'],

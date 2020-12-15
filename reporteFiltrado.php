@@ -1,13 +1,11 @@
 <?php
 ob_start();
-require('fpdf.php');
-require('cn.php');
-$facultad = $_POST['cmbFacultad'];
-$programa = $_POST['cmbPrograma'];
-$año = $_POST['cmbCancelacion'];
+require_once 'fpdf.php';
+require_once "database.php";
+$facultad = sano($_POST['cmbFacultad']);
+$programa = sano($_POST['cmbPrograma']);
+$año = sano($_POST['cmbCancelacion']);
 
-//Connect to your database
-include("cn.php");
 class PDF extends FPDF
 {
 // Cabecera de página
@@ -38,13 +36,12 @@ function Header()
 
 function Footer()
 {
-    require('cn.php');
+    require "database.php";
     $consulta = "SELECT NOW();";
-    $resultado = $mysqli->query($consulta);
-    
+    $resultado = $con->query($consulta);
     $this->SetY(-15);
     $this->SetFont('Arial','I',8);
-    while ($row = $resultado->fetch_assoc()) {
+    while ($row = $resultado->fetch(PDO::FETCH_ASSOC)) {
         $this->Cell(0, 10, $row['NOW()'], 1, 0, '', 0);
     }    
     $this->Cell(0,10,utf8_decode('Pág.: ').$this->PageNo().'/{nb}',0,0,'R');
@@ -67,7 +64,7 @@ $pdf->SetFont('Arial','B',8);
 
 
 //Select the Products you want to show in your PDF file
-$result=$mysqli->query("SELECT 
+$result = $con->query("SELECT 
 ex.codigo AS Expediente,
 ex.FechaIngresado AS FechaIngresado,
 a.Carnet AS Carnet,
@@ -81,7 +78,6 @@ ex.ubicacion AS Ubicacion,
 ex.comentario AS Comentario,
 ex.observacion AS Observacion,
 f.Nombre as Facultad
-
 FROM
 expediente ex
     INNER JOIN
@@ -103,7 +99,7 @@ $i = 0;
 //Set maximum rows per page
 $max = 25;
 
-while($row = $result->fetch_assoc())
+while($row = $result->fetch())
 {
     //If the current row is the last one, create new page and print column title
     if ($i == $max)

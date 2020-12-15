@@ -51,21 +51,9 @@
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 							<li class="nav-item active">
-								<a class="nav-link text-white">Bienvenido/a <?= $user['PriNombre']; ?></a>
+								<a class="nav-link text-white">Bienvenido/a <?= $_SESSION['nameUser']; ?></a>
 							</li>
 						</ul>
 					</div>
 				</nav>
-				<div class="container">
-					<div class="row float-right">
-						<div class="col-12">
-							<nav aria-label="breadcrumb">
-								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="#">Inicio</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Expediente</li>
-								</ol>
-							</nav>
-						</div>
-					</div>
-				</div>
-				<br />
+				

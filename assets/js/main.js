@@ -74,13 +74,13 @@ $(function () {
 	}
 	function fillAnio() {
 		$.ajax({
-			url: 'cmbAnio.php',
+			url: 'cmbAno.php',
 			type: 'GET',
 			success: function (response) {
 				let facts = JSON.parse(response);
-				let template = '<option value="0">Seleccionar::</option>';
+				let template = '<option value="-1" disabled selected hidden>Por favor seleccione una opcion</option>';
 				facts.forEach((fact) => {
-					template += `<option value="${fact.Anio}">${fact.Anio}</option>`;
+					template += `<option value="${fact.Year}">${fact.Year}</option>`;
 				});
 				$('#cmbCancelacion').html(template);
 			},
@@ -99,7 +99,7 @@ $(function () {
 	});
 	$('#formExpediente').submit(function (e) {
 		$('button[name="addExp"]').click(function () {
-			let rand = Math.floor((Math.random() * 10) + 1);
+			let rand = Math.floor(Math.random() * 10 + 1);
 			const postData = {
 				codigo: rand.toString(),
 				carnet: $('#txtCarnet').val(),
@@ -112,7 +112,7 @@ $(function () {
 				facultad: $('#cmbFacultad').val(),
 				motivo: $('#cmbMotivo').val(),
 				observacion: $('#txtObservacion').val(),
-				};
+			};
 			console.info(postData);
 			$('#formExpediente').modal('toggle');
 			$.post('exp-add.php', postData, function (response) {

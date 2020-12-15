@@ -1,8 +1,8 @@
 <?php
 ob_start();
 
-require('fpdf.php');
-
+require_once 'fpdf.php';
+require_once 'database.php';
 class PDF extends FPDF
 {
 // Cabecera de página
@@ -42,15 +42,15 @@ function Header()
 // Pie de página
 function Footer()
 {
-    require('cn.php');
+    require 'database.php';
     $consulta = "SELECT NOW();";
-    $resultado = $mysqli->query($consulta);
+    $resultado = $con->query($consulta);
     
     // Posición: a 1,5 cm del final
     $this->SetY(-15);
     // Arial italic 8
     $this->SetFont('Arial','I',8);
-    while ($row = $resultado->fetch_assoc()) {
+    while ($row = $resultado->fetch(PDO::FETCH_ASSOC)) {
         $this->Cell(0, 10, $row['NOW()'], 1, 0, '', 0);
     }    
     // Número de página
@@ -59,17 +59,17 @@ function Footer()
 }
 }
 
-require('cn.php');
 
-$consulta = "CALL reporte_ingresado ('Ingresado')";
-$resultado = $mysqli->query($consulta);
+
+$consulta = "CALL reporte_ingresado ('Ingresado',1)";
+$resultado = $con->query($consulta);
 
 $pdf = new PDF('L','mm','A4');
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Arial','B',8);
 
-while ($row = $resultado->fetch_assoc()) {
+while ($row = $resultado->fetch(PDO::FETCH_ASSOC)) {
     $pdf->Cell(30, 10, $row['Expediente'], 1, 0, '', 0);
     $pdf->Cell(20, 10, $row['Carnet'], 1, 0, '', 0);
     $pdf->Cell(25, 10, $row['Apellidos'], 1, 0, '', 0);

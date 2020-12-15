@@ -1,12 +1,12 @@
 <?php
 
-  	require 'database.php';
+  	require_once 'database.php';
 
 	$message = '';
 
   	if (isset($_POST['escritorio']) && isset($_POST['password'])) {
 		$sql = "INSERT INTO users (escritorio, password) VALUES (:escritorio, :password)";
-		$stmt = $conn->prepare($sql);
+		$stmt = $con->prepare($sql);
 		$stmt->bindParam(':escritorio', $_POST['escritorio']);
 		$password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 		$stmt->bindParam(':password', $password);

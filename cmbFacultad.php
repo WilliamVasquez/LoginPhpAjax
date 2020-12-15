@@ -1,13 +1,13 @@
 <?php
-    include 'baseAjax.php';
+    include_once 'database.php';
     $query = "select * from facultad";
-    $result = mysqli_query($con,$query);
+    $result = $con->query($query);
     if(!$result){
-        die('Query failed cmbFacultad list! '.mysqli_error($con));
+        die('Query failed cmbFacultad list! '.errorInfo());
     }
     else{
         $json = array();
-        while($row = mysqli_fetch_array($result)){
+        while($row = $result->fetch()){
             $json[] = array(
                 'idFacultad' => $row['IdFacultad'],
                 'Nombre' => $row['Nombre']

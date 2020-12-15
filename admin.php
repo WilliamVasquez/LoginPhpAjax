@@ -1,22 +1,21 @@
 <?php
-	require 'auth.php';
-	require 'database.php';
-
-	if (isset($_SESSION['user_id'])) {
-		$records = $conn->prepare('SELECT * FROM usuario WHERE Escritorio = :escritorio');
-		$records->bindParam(':escritorio', $_SESSION['user_id']);
-		$records->execute();
-		$results = $records->fetch(PDO::FETCH_ASSOC);
-
-		$user = null;
-
-		if (is_countable($results) > 0) {
-            $user = $results;
-		}
-	}
+	require_once 'auth.php';
+	require_once 'database.php';
+	require_once 'inc/header.php'; 
 ?>
-<?php if(!empty($user)): ?>
-	<?php require 'inc/header.php'; ?>
+	<div class="container">
+		<div class="row float-right">
+			<div class="col-12">
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="#">Inicio</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Expediente</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<br />
 	<div class="container">
 		<div class="row no-gutters mt-5">
 			<div class="col-lg-3 col-md-3 col-sm-12 p-0">
@@ -79,10 +78,6 @@
 		<?= $message ?>
 	<?php endif; ?>
 	<?php 
-		require 'inc/modals.php';
-		require 'inc/footer.php'; 
+		require_once 'inc/modals.php';
+		require_once 'inc/footer.php'; 
 	?>
-<?php else: ?>
-    <h1>Pues no mi ciela</h1>
-    <a href="logout.php">Logout</a>
-<?php endif; ?>
