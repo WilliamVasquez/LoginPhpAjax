@@ -4,7 +4,7 @@
 
   	if (isset($_SESSION['idUser'])) {
 		//header('Location: '.$_SESSION['vista'].'.php');
-		header('Location: admin.php');
+		header('Location: escritorio.php');
   	}
 	require_once 'database.php';
 	if (isset($_POST['txtEscritorio']) && isset($_POST['txtPassword'])) {
