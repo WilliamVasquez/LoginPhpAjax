@@ -1,6 +1,6 @@
 <?php
     require_once 'database.php';
-    $query = "CALL crud_expediente (1, 0, '', '', '', '', '', '', '', '', '', '', '', 0, 0, 0)";
+    $query = "CALL crud_expediente (1, 0, '', '', '', '', '', '', '', '', '', '', '', 0, 0, 0, 1, 5)";
     $result = $con->query($query);
     if(!$result){
         echo 'Query failed exp list! '.errorInfo();
@@ -16,7 +16,8 @@
                 'Apellidos' => $row['Apellidos'],
                 'Programa' => $row['Programa'],
                 'Motivo' => $row['Motivo'],
-                'Estado' => $row['Estado']
+                'Estado' => $row['Estado'],
+                'Facultad' => $row['Facultad']
             );
         }
         $jsonString = json_encode($json);

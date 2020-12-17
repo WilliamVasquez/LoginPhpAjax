@@ -337,3 +337,12 @@ hr {
   stroke: #000000;
   stroke-width: 1;
 }
+
+.table-opc {
+  box-shadow: 0px 0px 0.2em #444;
+  font-size: small;
+}
+
+#tipoOpc{
+  font-size: small;
+}
