@@ -18,16 +18,17 @@
                 Se muestra un formulario para ingresar un nuevo expediente.
               </p>
             </div>
-            <div class="card-footer">
-              <form action="">
+            <div class="card-footer">      
                 <button
-                  type="submit"
+                  type="button"
                   class="btn btn-opc btn-block"
-                  id="reporteTodo"
+                  id="nuevoExpediente"
+                  data-toggle="modal"
+                  data-target="#formExpediente"
+                  data-tipo="newExpediente"
                 >
-                  Seleccionar
+                  Agregar
                 </button>
-              </form>
             </div>
           </div>
         </div>
@@ -45,15 +46,15 @@
               </p>
             </div>
             <div class="card-footer">
-              <form action="">
                 <button
-                  type="submit"
                   class="btn btn-opc btn-block"
-                  id="reporteTodo"
+                  type="button" 
+                  id="editarExpediente"
+                  data-toggle="modal" 
+                  data-target="#formTabla"
                 >
-                  Seleccionar
+                  Editar
                 </button>
-              </form>
             </div>
           </div>
         </div>
@@ -77,7 +78,7 @@
                   class="btn btn-opc btn-block"
                   id="reporteTodo"
                 >
-                  Seleccionar
+                  Eliminar
                 </button>
               </form>
             </div>
@@ -103,7 +104,7 @@
                   class="btn btn-opc btn-block"
                   id="reporteTodo"
                 >
-                  Seleccionar
+                  Dar de baja
                 </button>
               </form>
             </div>
@@ -129,7 +130,7 @@
                   class="btn btn-opc btn-block"
                   id="reporteTodo"
                 >
-                  Seleccionar
+                  Filtrar
                 </button>
               </form>
             </div>
@@ -156,7 +157,7 @@
                   class="btn btn-opc btn-block"
                   id="reporteTodo"
                 >
-                  Seleccionar
+                  Solicitar
                 </button>
               </form>
             </div>

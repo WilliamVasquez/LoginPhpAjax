@@ -1,4 +1,4 @@
-    <div
+`    <div
         class="modal fade"
         id="formExpediente"
         tabindex="-1"
@@ -100,6 +100,68 @@
                                     <input type="checkbox" class="custom-control-input" id="chk-files" />
                                     <label class="custom-control-label" for="chk-files">Activar</label>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-danger" data-dismiss="modal" id="cerrar">Cerrar</button>
+                            <button type="submit" class="btn btn-success" id="accion">:Accion</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL TABLA -->
+<div
+        class="modal fade"
+        id="formTabla"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="formTabla"
+        aria-hidden="true"
+        data-backdrop="static"
+        data-keyboard="false"
+    >
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-bold" id="tituloModal">Selección :titulo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form method="POST" enctype="multipart/form-data" id="formTabla">
+                        <input type="hidden" id="expId" />
+                        <input type="hidden" id="expExp" />
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-responsive table-hover table-striped mt-5">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <!-- <th scope="col">Expediente</th> -->
+                                                <th scope="col">Carnet</th>
+                                                <th scope="col">Nombres</th>
+                                                <th scope="col">Apellidos</th>
+                                                <th scope="col">Programa</th>
+                                                <th scope="col">Motivo</th>
+                                                <th scope="col">Estado</th>
+                                                <th scope="col" class="text-center">Opciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="expsOpc"></tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="expsOpc_pagination">
+                                    <div id="page">
+                                        <ul class="pagination"></ul>
+                                    </div>
+                                    <label id="info">Page information will be displayed here.</label>
+                                </div> -->
+                                
                             </div>
                         </div>
                         <div class="modal-footer">

@@ -4,6 +4,7 @@ $(function () {
 	fillPrograma();
 	fillMotivo();
 	fillAnio();
+	obtenerExpediente();
 	function getExp() {
 		$.ajax({
 			url: 'exp-list.php',
@@ -27,6 +28,31 @@ $(function () {
 					</tr>`;
 				});
 				$('#exps').html(template);
+			},
+		});
+	}
+
+	function obtenerExpediente() {
+		$.ajax({
+			url: 'exp-list.php',
+			type: 'GET',
+			success: function (response) {
+				let exps = JSON.parse(response);
+				let template = '';
+				exps.forEach((exp) => {
+					template += `<tr>
+						<td>${exp.Carnet}</td>
+						<td>${exp.Nombres}</td>
+						<td>${exp.Apellidos}</td>
+						<td>${exp.Programa}</td>
+						<td>${exp.Motivo}</td>
+						<td>${exp.Estado}</td>
+						<td class="d-flex">
+						<button type="button" id="tipoOpc" class="btn btn-primary exp-item" data-toggle="modal" data-target="#formExpediente" value="${exp.idDetalle}">Seleccionar</button>
+						</td>
+					</tr>`;
+				});
+				$('#expsOpc').html(template);
 			},
 		});
 	}
@@ -259,3 +285,14 @@ $(function () {
 		});
 	});
 });
+
+$(document).ready(function(){
+	$('#page').Pagination({ // id to initial draw and use pagination
+				size: 87, // size of list input
+				pageShow: 5, // 5 page-item per page
+				page: 1, // current page (default)
+				limit: 10, // current limit show perpage (default)
+			}, function(obj){ // callback function, you can use it to re-draw table or something
+					$('#info').html('Current page: ' + obj.page);
+			});
+	});
