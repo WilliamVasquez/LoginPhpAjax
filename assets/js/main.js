@@ -4,6 +4,7 @@ $(function () {
 	fillPrograma();
 	fillMotivo();
 	fillAnio();
+	obtenerExpediente();
 	function getExp() {
 		$.ajax({
 			url: 'exp-list.php',
@@ -259,3 +260,4 @@ $(function () {
 		});
 	});
 });
+
