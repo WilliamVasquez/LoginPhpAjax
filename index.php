@@ -15,7 +15,7 @@
 		$result->bindValue(':escritorio', $escritorio);
 		$result->execute();
 		$results = $result->fetch();
-		if (password_verify($password, $results['Clave']) && $results!=0)
+		if (password_verify($password, $results['Clave']) && $results != 0)
 		{
 			$_SESSION['idUser'] = $results['Escritorio'];
 			$_SESSION['nameUser'] = $results['PriNombre'];
