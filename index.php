@@ -4,9 +4,9 @@
 
   	if (isset($_SESSION['idUser'])) {
 		//header('Location: '.$_SESSION['vista'].'.php');
-		header('Location: escritorio.php');
+		header('Location: vista/escritorio.php');
   	}
-	require_once 'database.php';
+	require_once 'conexion/database.php';
 	if (isset($_POST['txtEscritorio']) && isset($_POST['txtPassword'])) {
 		
 		$result = $con->prepare('SELECT us.Escritorio, us.PriNombre, us.PriApellido, us.Clave, tp.Nombre as Vista FROM usuario us inner join tipousuario tp on us.IdtipoUsuario=tp.IdtipoUsuario WHERE Escritorio = :escritorio;');
@@ -20,7 +20,7 @@
 			$_SESSION['idUser'] = $results['Escritorio'];
 			$_SESSION['nameUser'] = $results['PriNombre'];
 			$_SESSION['vista'] = $results['Vista'];
-			header('Location: admin.php');
+			header('Location: vista/admin.php');
 		}
 		else
 			$message = "<script>alertify.error('Sorry, those credentials do not match.');</script>"; 
@@ -31,10 +31,10 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Login</title>
-		<link rel="stylesheet" type="text/css" href="assets/css/alertify.min.css" />
-		<link rel="stylesheet" type="text/css" href="assets/css/default.min.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/vendor/alertify.min.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/vendor/default.min.css" />
 		<link rel="stylesheet" href="assets/css/estilos.css" />
-		<script src="assets/js/alertify.min.js"></script>
+		<script src="assets/js/vendor/alertify.min.js"></script>
 	</head>
 	<body class="bg-light">
 		<?php if(!empty($message)): ?>
@@ -44,7 +44,7 @@
 			<nav class="navbar navbar-light">
 				<div class="navbar-brand" href="#">
 					<img
-						src="assets/images/Escudo_de_la_Universidad_de_El_Salvador.svg"
+						src="assets\images\escudo-ues.svg"
 						width="48"
 						height="100%"
 						class="d-inline-block align-top"
