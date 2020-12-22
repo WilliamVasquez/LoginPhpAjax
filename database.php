@@ -1,7 +1,7 @@
 <?php
 	$server = 'localhost';
 	$username = 'root';
-	$password = 's3rv1c31';
+	$password = '1523';
 	$database = 'bdarchivos';
 
 	try {
