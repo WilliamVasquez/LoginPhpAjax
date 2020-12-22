@@ -1,10 +1,10 @@
 <?php
-    include 'database.php';
+    include '../conexion/database.php';
 
     $limit = 10;
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $star = ($page - 1) * $limit;
-    $query = "CALL crud_expediente (1, 0, '', '', '', '', '', '', '', '', '', '', '', 0, 0, 0, $star, $limit)";
+    $query = "CALL crud_expediente (1, 0, '', '', '', '', '', '', '', '', '', '', '', 0, 0, 0)";
     $result = $con->query($query);
     $expedientes = $result->fetchAll(PDO::FETCH_ASSOC);
     $result->closeCursor();

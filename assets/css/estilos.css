@@ -1,5 +1,5 @@
 @import url("normalize.css");
-@import url("bootstrap.min.css");
+@import url("vendor/bootstrap.min.css");
 
 :root {
   --main-bg-color: #537a37;
